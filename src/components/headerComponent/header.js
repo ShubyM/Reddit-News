@@ -1,9 +1,10 @@
-import './header.css';
 import React from 'react';
+import '/Users/Shuby/Documents/Website/my-website/src/App.css';
 
 class Header extends React.Component {
   render() {
     return (
+    <header>
      <nav> 
          <ul>
              <li> 
@@ -11,7 +12,7 @@ class Header extends React.Component {
              </li>
          </ul>
 
-         <ul>
+         <ul> 
             <li> 
                 <a href = "/"> About Me </a>
             </li>
@@ -30,6 +31,7 @@ class Header extends React.Component {
          </ul>
 
      </nav>
+     </header>
     );
   }
 }

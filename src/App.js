@@ -1,14 +1,14 @@
 import './App.css';
 import React from 'react';
+import Header from './components/headerComponent/header'
 
 
 class App extends React.Component {
   render() {
     return (
-     <React.Fragment> 
-      <h1> Hello </h1>
-      <p id = "scores"> being abitch </p> 
-     </React.Fragment>
+      <div classname = "App"> 
+      <Header> </Header>
+      </div>
     );
   }
 }

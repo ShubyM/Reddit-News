@@ -1,9 +1,6 @@
-'use strict';
-import React from 'react';
-
 const snoowrap = require('snoowrap');
-
-
+var fs = require('fs');
+var file = fs.createWriteStream('something.csv');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 
 const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -17,7 +14,7 @@ const r = new snoowrap({
   clientId: 'AzC27iiyRqCkAQ',
   clientSecret: '8KtUv8B5V8p5v_wv1X0fv4U6g5I',
   username: 'BambooSlayerz',
-  password: 'shadowmw3'
+  password: 'shadowmw3',
 });
 
 var scores = []
@@ -25,42 +22,34 @@ var scores = []
 function gatherRedditData() {
   const rawItems = r.getSubreddit('news').getHot({limit : 100});
   var listOfTitles = (rawItems.map(post => post.title));
-  listOfTitles.then(events => main(events))
+  listOfTitles.then(events => {
+    analyzeEvents(events)
+  })
 }
 
-function analyzeEvents(event) {
+function analyzeEvents(arrayOfEvents) {
+  for (const event of arrayOfEvents) {
   naturalLanguageUnderstanding.analyze({
-      "features": {
-        "sentiment" : {}
-      },
-      "text" : event})
-      .then(analysisResults => {
-      return scoresInArray(analysisResults["sentiment"]["document"]["score"])
-  });
-}
-
-function scoresInArray(score) {
-  scores.push(score)
-
-  if (scores.length === 100) {
-    exportScores(scores)
+      "features": {"sentiment" : {}}, "text" : event})
+      .then(function(analysisResults) {
+      scores.push(event, analysisResults["sentiment"]["document"]["score"])
+      if (scores.length === 100) {
+        writeToFile(scores)
+      }
+    })
   }
 }
 
-function exportScores(scores) {
-    return scores
-}
-
-
-function main(events) {
-  for (const event of events) {
-    analyzeEvents(event);
+function writeToFile(scores) {
+  for (var i = 0; i < scores.length; i = i + 2) {
+    scores[i] = scores[i].replace(/,/g, '')
   }
+
+
+
 }
 
 exports.start = function start() {
-  gatherRedditData();
+  gatherRedditData()
 }
-
-
 
