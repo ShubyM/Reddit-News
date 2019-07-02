@@ -1,9 +1,10 @@
+import './header.css';
 import React from 'react';
-import '/Users/Shuby/Documents/Website/my-website/src/App.css';
 
 class Header extends React.Component {
   render() {
     return (
+    <div className = "container-fluid">
     <header>
      <nav> 
          <ul>
@@ -32,6 +33,7 @@ class Header extends React.Component {
 
      </nav>
      </header>
+     </div>
     );
   }
 }

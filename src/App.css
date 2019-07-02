@@ -8,8 +8,9 @@ header {
 }
 
 header a {
-  color : orange;
+  color : rgb(98, 0, 255);
   padding-left: 40px;
+  font-family: 'Quicksand', sans-serif;
 }
 
 header nav, ul, li {

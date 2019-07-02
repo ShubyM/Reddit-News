@@ -1,0 +1,31 @@
+header {
+    display: block;
+    width : 100%;
+    background: rgb(250, 246, 246);
+    position: relative;
+    height:  90px;
+    font-size: 17px;
+  }
+  
+  header a {
+    color : rgb(98, 0, 255);
+    padding-left: 40px;
+    font-family: 'Quicksand', sans-serif;
+  }
+  
+  header nav, ul, li {
+    margin : 0;
+    padding : 0;
+  }
+  
+  header nav {
+    position: absolute;
+    top: 38%;
+    right: 15px;
+  }
+  
+  header ul, li {
+    list-style-type: none;
+    display : inline-block;
+  }
+    
