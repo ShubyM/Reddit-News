@@ -2,51 +2,46 @@ import React from "react";
 import Data from "./redditData.json";
 import "./reddit.css";
 
+
+function start() {
+  var reddit = require('./redditNews');
+  reddit.start()
+}
+
 class Reddit extends React.Component {
   render() {
     return (
-      //   <div>
-      //     {/* {Data.table.map((eventData, index) => {
-      //       return (
-      //         <p>
-      //           {eventData.event} {eventData.score}
-      //         </p> */}
-      //       );
-      //     })}
-      //   </div>
-
-      <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
+      <section>
+        <table>
           <thead>
             <tr>
-              <th>Event Name</th>
-              <th>Event score</th>
-              <th> Up Votes </th>
-              {/* <th>Up Votes</th>
-              <th>Total score</th>
-              <th>Change %</th> */}
+              <th scope="col"> Event Name <button onClick = {start}> Refresh (NW) </button></th>
+              <th scope="col"> Event score</th>
+              <th scope="col"> Up Votes </th>
+              <th scope = "col"> Sum Score </th> 
             </tr>
           </thead>
+
+          <tbody>
+            {Data.table.map((eventData, index) => {
+              return (
+                <tr>
+                  <td class = "column1"> {eventData.title} </td>
+                  <td> {eventData.score} </td>
+                  <td> {eventData.upVotes} </td>
+                  <td> </td>
+
+                </tr>
+              );
+            })}
+          </tbody>
+
+          <tfoot>
+            
+          </tfoot>
+
         </table>
-
-        <div class="tbl-content">
-          <table cellpadding="0" cellspacing="0" border="0">
-            <tbody>
-              <tr>
-                {Data.table.map((eventData, index) => {
-                   return <tr> 
-                       <td> {eventData.title} </td> 
-                       <td> {eventData.score} </td>
-                       <td> {eventData.upVotes} </td>
-                    </tr>
-                })}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-      </div>
+      </section>
     );
   }
 }

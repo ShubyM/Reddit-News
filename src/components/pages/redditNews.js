@@ -22,30 +22,8 @@ var postProperties = []
 
 function gatherRedditData() {
   const rawItems = r.getSubreddit('news').getHot({limit : 100});
-  // var listOfTitles = (rawItems.map(post => post.title));
-  // listOfTitles.then(events => {
-  //   analyzeEvents(events)
-  // })
-
   analyzeEvents(rawItems)
-
-
-  // var listOfUpvotes = (rawItems.map(post => post.score));
-  // listOfUpvotes.then(votes => console.log(votes));
 }
-
-// function analyzeEvents(arrayOfEvents) {
-//   for (const event of arrayOfEvents) {
-//   naturalLanguageUnderstanding.analyze({
-//       "features": {"sentiment" : {}}, "text" : event})
-//       .then(function(analysisResults) {
-//       scores.push(event, analysisResults["sentiment"]["document"]["score"])
-//       if (scores.length === 100) {
-//         writeToFile(scores)
-//       }
-//     })
-//   }
-// }
 
 function analyzeEvents(rawData) {
   rawData.map(post => {
@@ -61,12 +39,14 @@ function analyzeEvents(rawData) {
 function writeToFile(postProperties) {
   var data = {}
   data.table = []
+
   for (var i = 0; i < postProperties.length; i += 3) {
     postProperties[i] = postProperties[i].replace(/,/g, '');
     var inputData = {
       title : postProperties[i],
-      score : postProperties[i + 1],
-      upVotes : postProperties[i + 2]
+      upVotes : postProperties[i + 1],
+      score : postProperties[i + 2],
+      sumScores : postProperties[i + 2] * postProperties[i + 1] 
     }
     data.table.push(inputData)
   }
