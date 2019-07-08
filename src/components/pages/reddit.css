@@ -1,8 +1,13 @@
 table {
   border-collapse: collapse;
 }
-th,
 
+
+section, table, td {
+  border-radius: 12px;
+}
+
+th,
 td {
   border: 1px solid #cecfd5;
   padding: 10px 15px;
@@ -14,5 +19,10 @@ td {
 }
 
 section {
-  padding : 20px 20px -20px 20px;
+  padding : 20px 20px 20px 20px;
+  border-radius: 20px;
+}
+
+tfoot tr:last-child td :last-child {
+  border-bottom-left-radius: 15px;
 }

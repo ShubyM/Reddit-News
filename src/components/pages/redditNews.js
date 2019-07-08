@@ -1,7 +1,9 @@
 const snoowrap = require('snoowrap');
+
 var fs = require('fs');
 
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
+
 const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
   version: '2018-11-16',
   iam_apikey: 'p0wDcQ6snhLWYcejw1gn29cW64aFJnZ3QOHIAe6aurSP',
@@ -39,17 +41,28 @@ function analyzeEvents(rawData) {
 function writeToFile(postProperties) {
   var data = {}
   data.table = []
+  data.total = []
+
+  var sumScores = 0;
+  var sentimentSum = 0;
 
   for (var i = 0; i < postProperties.length; i += 3) {
     postProperties[i] = postProperties[i].replace(/,/g, '');
+    
     var inputData = {
       title : postProperties[i],
       upVotes : postProperties[i + 1],
       score : postProperties[i + 2],
-      sumScores : postProperties[i + 2] * postProperties[i + 1] 
     }
+
+    sumScores +=  postProperties[i + 2] * postProperties[i + 1] 
+    sentimentSum += postProperties[i + 2]
     data.table.push(inputData)
   }
+// The total sum is calculated based directly based on the value
+// TODO: Figure out better may to calculate total that make sense
+  data.total.push(sumScores)
+  data.total.push(sentimentSum)
 
   fs.writeFile(PATH, JSON.stringify(data), function(err) {
     if (err) {console.log(err)}
