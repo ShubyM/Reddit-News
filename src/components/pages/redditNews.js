@@ -67,6 +67,8 @@ function writeToFile(postProperties) {
   fs.writeFile(PATH, JSON.stringify(data), function(err) {
     if (err) {console.log(err)}
     else {console.log("Done writing to file")}
+
+    // hi
     }
   );
 }
