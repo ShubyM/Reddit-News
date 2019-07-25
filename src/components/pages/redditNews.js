@@ -54,7 +54,7 @@ function writeToFile(postProperties) {
       upVotes : postProperties[i + 1],
       score : postProperties[i + 2],
     }
-
+    
     sumScores +=  postProperties[i + 2] * postProperties[i + 1] 
     sentimentSum += postProperties[i + 2]
     data.table.push(inputData)
@@ -67,8 +67,6 @@ function writeToFile(postProperties) {
   fs.writeFile(PATH, JSON.stringify(data), function(err) {
     if (err) {console.log(err)}
     else {console.log("Done writing to file")}
-
-    // hi
     }
   );
 }

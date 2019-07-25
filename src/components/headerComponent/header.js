@@ -21,7 +21,7 @@ class Header extends React.Component {
 
          <ul>
             <li> 
-                <a href = "/"> Reddit News</a>
+                <a href = "./components/pages/reddit"> Reddit News</a>
             </li>
          </ul>
 

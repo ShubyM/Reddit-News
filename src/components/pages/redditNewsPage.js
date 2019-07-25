@@ -2,8 +2,9 @@ import React from "react";
 import Data from "./redditData.json";
 import "./reddit.css";
 
+var reddit = require("./redditNews");
+
 function start() {
-  var reddit = require("./redditNews");
   reddit.start();
 }
 
@@ -15,7 +16,8 @@ class Reddit extends React.Component {
           <thead>
             <tr>
               <th scope="col">
-                Event Name <button onClick={start}> Refresh (NW) </button>
+                <script type="text/javascript" src="runReddit.js"></script>
+                Event Name <button onClick = {start}> Refresh (NW) </button>
               </th>
               <th scope="col"> Event score</th>
               <th scope="col"> Up Votes </th>
@@ -39,9 +41,6 @@ class Reddit extends React.Component {
           <tfoot>
             <tr>
               <td colspan="1"> Total Score </td>
-              {/* {Data.total.map((sum, index) => {
-                return <td> {sum} </td>;
-              })} */}
 
               <td> {Data.total[1]} </td>
 

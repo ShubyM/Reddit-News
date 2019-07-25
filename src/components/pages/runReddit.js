@@ -1,5 +1,7 @@
-var reddit = require('./redditNews');
-reddit.start()
+function start() {
+    var reddit = require('./redditNews');
+    reddit.start()
+}
 
-
+start()
 
