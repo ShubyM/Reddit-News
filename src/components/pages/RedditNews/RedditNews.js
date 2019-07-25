@@ -13,7 +13,7 @@ const r = new snoowrap({
   password: "shadowmw3"
 });
 
-class RedditTest extends React.Component {
+class RedditNews extends React.Component {
   constructor(props) {
     super(props);
 
@@ -94,13 +94,15 @@ class RedditTest extends React.Component {
             <tr>
               <td colSpan="1"> Total Score </td>
 
-              <td> DICK </td>
+              <td>  </td>
 
               <td> </td>
 
-              <td> ASS </td>
+              <td>  </td>
             </tr>
           </tfoot>
+
+          // TODO: GET TOTAL SUM AND LOOK AT DATA
 
           <tbody>{this.renderTable()}</tbody>
         </table>
@@ -109,4 +111,4 @@ class RedditTest extends React.Component {
   }
 }
 
-export default RedditTest;
+export default RedditNews;

@@ -1,5 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
+
+
+/** 
+The list of features we want to look far in the IBM request, 
+*/
 const FEATURES = {
   features: {
     concepts: {},
@@ -20,6 +25,12 @@ const FEATURES = {
 };
 
 
+
+/**
+ * 
+ * @param {*} response 
+ * converts the response from the IBM server to a json
+ */
 const parseJSON = (response) => { // eslint-disable-line
   return response.json();
 };
@@ -36,6 +47,8 @@ const handleErrors = (response) => {
  *
  * @param  {Object} params The parameters
  * @return {Promise}       The request promise
+ * Fetches the request from the proxy servers which allows it to call the NLU endpoint
+ * Necessary because NLU does not supports CORS at this point in time 
  */
 export const analyze = params => fetch('/api/analyze', {
   method: 'POST',

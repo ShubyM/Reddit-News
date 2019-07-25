@@ -1,9 +1,7 @@
 import './App.css';
 import React from 'react';
-import RedditTest from './components/testing/prototypeComponent';
 import Header from './components/headerComponent/header'
-import Reddit from './components/pages/redditNewsPage';
-import Card from './components/cardComponent/card';
+import RedditNews from './components/pages/RedditNews/RedditNews';
 
 
 
@@ -20,7 +18,7 @@ class App extends React.Component {
       <div classname = "App"> 
       <Header> </Header>
       {/* <Reddit /> */}
-      <RedditTest />
+      <RedditNews />
 
 
 
