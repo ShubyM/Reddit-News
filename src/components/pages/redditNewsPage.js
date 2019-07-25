@@ -1,6 +1,5 @@
 import React from "react";
 import Data from "./redditData.json";
-import "./reddit.css";
 
 var reddit = require("./redditNews");
 

@@ -1,13 +1,19 @@
 import './App.css';
 import React from 'react';
+import RedditTest from './components/testing/prototypeComponent';
 import Header from './components/headerComponent/header'
 import Reddit from './components/pages/redditNewsPage';
 import Card from './components/cardComponent/card';
-import RedditTest from './components/testing/prototypeComponent';
+
+
+
+
 
 
 class App extends React.Component {
   /* @params headerName, title, sub, desc, foot */
+
+  
 
   render() {
     return (

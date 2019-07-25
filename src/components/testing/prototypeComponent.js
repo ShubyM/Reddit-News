@@ -1,73 +1,112 @@
-'use-strict';
-import React from 'react'
-// var reddit = require('./prototypeComponent')
+"use-strict";
+import React from "react";
+import "./reddit.css";
+import { analyzeWithAllFeatures } from "./request";
 
-const snoowrap = require('snoowrap');
-
-
-const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
-
-const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-  version: '2018-11-16',
-  iam_apikey: 'p0wDcQ6snhLWYcejw1gn29cW64aFJnZ3QOHIAe6aurSP',
-  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api'
-});
+const snoowrap = require("snoowrap");
 
 const r = new snoowrap({
-    userAgent: 'Reddit News JS by /u/BambooSlayerz',
-    clientId: 'AzC27iiyRqCkAQ',
-    clientSecret: '8KtUv8B5V8p5v_wv1X0fv4U6g5I',
-    username: 'BambooSlayerz',
-    password: 'shadowmw3',
+  userAgent: "Reddit News JS by /u/BambooSlayerz",
+  clientId: "AzC27iiyRqCkAQ",
+  clientSecret: "8KtUv8B5V8p5v_wv1X0fv4U6g5I",
+  username: "BambooSlayerz",
+  password: "shadowmw3"
 });
 
-
-
-
-
 class RedditTest extends React.Component {
-    gatherRedditData() {
-        var posts = []
-        const rawItems = r.getSubreddit('news').getHot({limit : 100});
-        rawItems.map(post => {
-            naturalLanguageUnderstanding.analyze({
-            "features": {"sentiment" : {}}, "text" : post.title})
-            .then(function(analysisResults) {
-              posts.push(post.title, post.score, analysisResults["sentiment"]["document"]["score"])
-              if (posts.length === 300) console.log(posts)
-            })
-          })
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      posts: [],
+      scores: [],
+      upVotes: [],
+      loaded: false
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ loaded: false });
+    const rawItems = r.getSubreddit("news").getHot({ limit: 100 });
+    rawItems
+      .map(post => post.title)
+      .then(titles => {
+        this.setState({ posts: titles });
+      });
+
+    rawItems
+      .map(post => post.score)
+      .then(scores => {
+        this.setState({ upVotes: scores });
+      });
+
+    rawItems.map(post => this.analyze(post.title));
+  }
+
+  analyze(text) {
+    analyzeWithAllFeatures({ text }).then(json =>
+      this.setState({
+        scores: this.state.scores.concat(json.results.sentiment.document.score)
+      })
+    );
+  }
+
+  renderTable() {
+    var elements = [];
+
+    var total = 0;
+
+    for (var i = 0; i < 100; i++) {
+      total += this.state.scores[i];
+      elements.push(
+        <tr>
+          <td class="column1"> {this.state.posts[i]} </td>
+          <td> {this.state.scores[i]} </td>
+          <td> {this.state.upVotes[i]}</td>
+          <td> {this.state.scores[i] * this.state.upVotes[i]} </td>
+        </tr>
+      );
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: [],
-            scores: [],
-            upVotes: []
-        };
-    }
+    // elements.push(<foot> <tr> </tr></foot> )
+    return elements;
+  }
 
-    componentDidMount() {
-        var events = []
-        const rawItems = r.getSubreddit('news').getHot({limit : 100});
-        rawItems.map(post => events.push(post.title));
-        if (events.length === 100) {
-            this.setState({posts : events});
-            console.log(events)
-        }
-    }
+  render() {
+    return (
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">
+                Event Name
+                <button onClick={() => window.location.reload()}>
+                  Refresh
+                </button>
+              </th>
+              <th scope="col"> Event score</th>
+              <th scope="col"> Up Votes </th>
+              <th scope="col"> Sum Score </th>
+            </tr>
+          </thead>
 
+          <tfoot>
+            <tr>
+              <td colSpan="1"> Total Score </td>
 
+              <td> DICK </td>
 
+              <td> </td>
 
-    render() {
-        return (
-            // <h1> {this.state.posts} </h1>
-            <button onClick = {this.gatherRedditData}> Refresh (NW) </button>
-        )
-    }
+              <td> ASS </td>
+            </tr>
+          </tfoot>
+
+          <tbody>{this.renderTable()}</tbody>
+        </table>
+      </section>
+    );
+  }
 }
-
 
 export default RedditTest;
