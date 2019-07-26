@@ -4,32 +4,51 @@ import fetch from 'isomorphic-fetch';
 
 /** 
 The list of features we want to look far in the IBM request, 
+Changing this to just sentiment because then we won't exceed the request limit
 */
-const FEATURES = {
-  features: {
-    concepts: {},
-    entities: {},
-    keywords: {},
-    categories: {},
-    emotion: {},
-    sentiment: {},
-    semantic_roles: {},
-    syntax: {
-      tokens: {
-        lemma: true,
-        part_of_speech: true,
-      },
-      sentences: true,
-    },
-  },
-};
-
+// const FEATURES = {
+//   features: {
+//     concepts: {},
+//     entities: {},
+//     keywords: {},
+//     categories: {},
+//     emotion: {},
+//     sentiment: {},
+//     semantic_roles: {},
+//     syntax: {
+//       tokens: {
+//         lemma: true,
+//         part_of_speech: true,
+//       },
+//       sentences: true,
+//     },
+//   },
+// };
 
 
 /**
+ * NLU limit is calculated based off of how many features are extracted
+ * and how many units of text you have
+ * A unit of text is anything below 10,000 characters
+ * So before we were sending 100 (Events) * 12 Features per refresh of the page
+ * 1200 per refresh * like 100 refershes (very reasonable)
+ * Now its 200, I can get in 6 times more requests
+ * DB is defintley the best solution
+ * TODO: Database INTEGRATION
+ */
+
+
+const FEATURES = {
+  features: {
+    concepts: {},
+    sentiment: {},
+  },
+};
+
+/**
  * 
- * @param {*} response 
- * converts the response from the IBM server to a json
+ * @return 
+ * converts the response from the IBM server to a json obj
  */
 const parseJSON = (response) => { // eslint-disable-line
   return response.json();

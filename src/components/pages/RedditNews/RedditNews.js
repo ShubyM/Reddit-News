@@ -4,6 +4,12 @@ import "./reddit.css";
 import { analyzeWithAllFeatures } from "./request";
 
 const snoowrap = require("snoowrap");
+const dotenv = require('dotenv');
+
+
+
+
+// TODO:  Wrap credentials into an enviorment variable 
 
 const r = new snoowrap({
   userAgent: "Reddit News JS by /u/BambooSlayerz",
@@ -12,6 +18,7 @@ const r = new snoowrap({
   username: "BambooSlayerz",
   password: "shadowmw3"
 });
+
 
 class RedditNews extends React.Component {
   constructor(props) {
@@ -26,6 +33,7 @@ class RedditNews extends React.Component {
   }
 
   componentDidMount() {
+    console.log(process.env.USERNAME)
     this.setState({ loaded: false });
     const rawItems = r.getSubreddit("news").getHot({ limit: 100 });
     rawItems
@@ -40,7 +48,7 @@ class RedditNews extends React.Component {
         this.setState({ upVotes: scores });
       });
 
-    rawItems.map(post => this.analyze(post.title));
+    // rawItems.map(post => this.analyze(post.title));
   }
 
   analyze(text) {

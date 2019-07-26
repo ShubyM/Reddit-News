@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1.js");
-
+const dotenv = require('dotenv');
 const app = express();
+
 
 
 /**
@@ -10,9 +11,9 @@ const app = express();
  * TODO: Wrap credentials into enviorment vairables
  */
 let nlu = new NaturalLanguageUnderstandingV1({
-    version: "2018-11-16",
-    iam_apikey: "29utp9pg2X5u6iRHhbIBeX8vXnEE9jx5iM_GoofPo9wN",
-    url: "https://gateway.watsonplatform.net/natural-language-understanding/api/",
+    version: process.env.VERSION,
+    iam_apikey: process.env.API_KEY,
+    url: process.env.URL,
 });
 
 
