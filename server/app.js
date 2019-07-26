@@ -17,6 +17,7 @@ let nlu = new NaturalLanguageUnderstandingV1({
 });
 
 
+
 /** 
  * Have no idea what this actually does?
  * TODO: Learn how this works

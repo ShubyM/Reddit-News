@@ -4,21 +4,15 @@ import "./reddit.css";
 import { analyzeWithAllFeatures } from "./request";
 
 const snoowrap = require("snoowrap");
-const dotenv = require('dotenv');
-
-
-
-
-// TODO:  Wrap credentials into an enviorment variable 
+const dotenv = require("dotenv");
 
 const r = new snoowrap({
-  userAgent: "Reddit News JS by /u/BambooSlayerz",
-  clientId: "AzC27iiyRqCkAQ",
-  clientSecret: "8KtUv8B5V8p5v_wv1X0fv4U6g5I",
-  username: "BambooSlayerz",
-  password: "shadowmw3"
+  userAgent: process.env.REACT_APP_USER_AGENT,
+  clientId: process.env.REACT_APP_CLIENT_ID,
+  clientSecret: process.env.REACT_APP_CLIENT_SECRET,
+  username: process.env.REACT_APP_USERNAME,
+  password: process.env.REACT_APP_PASSWORD
 });
-
 
 class RedditNews extends React.Component {
   constructor(props) {
@@ -33,9 +27,9 @@ class RedditNews extends React.Component {
   }
 
   componentDidMount() {
-    console.log(process.env.USERNAME)
     this.setState({ loaded: false });
     const rawItems = r.getSubreddit("news").getHot({ limit: 100 });
+
     rawItems
       .map(post => post.title)
       .then(titles => {
@@ -47,7 +41,7 @@ class RedditNews extends React.Component {
       .then(scores => {
         this.setState({ upVotes: scores });
       });
-
+    console.log(process.env)
     // rawItems.map(post => this.analyze(post.title));
   }
 
@@ -97,21 +91,18 @@ class RedditNews extends React.Component {
               <th scope="col"> Sum Score </th>
             </tr>
           </thead>
-
           <tfoot>
             <tr>
               <td colSpan="1"> Total Score </td>
 
-              <td>  </td>
+              <td> </td>
 
               <td> </td>
 
-              <td>  </td>
+              <td> </td>
             </tr>
           </tfoot>
-
           // TODO: GET TOTAL SUM AND LOOK AT DATA
-
           <tbody>{this.renderTable()}</tbody>
         </table>
       </section>
