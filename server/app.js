@@ -4,18 +4,14 @@ const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-unde
 const dotenv = require('dotenv');
 const app = express();
 
-
-
 /**
  * Constructs the NLU endpoint object to call
- * TODO: Wrap credentials into enviorment vairables
  */
 let nlu = new NaturalLanguageUnderstandingV1({
-    version: process.env.VERSION,
-    iam_apikey: process.env.API_KEY,
-    url: process.env.URL,
+    version: process.env.REACT_APP_VERSION,
+    iam_apikey: process.env.REACT_APP_API_KEY,
+    url: process.env.REACT_APP_URL,
 });
-
 
 
 /** 

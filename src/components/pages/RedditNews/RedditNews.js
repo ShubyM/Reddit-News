@@ -6,6 +6,12 @@ import { analyzeWithAllFeatures } from "./request";
 const snoowrap = require("snoowrap");
 const dotenv = require("dotenv");
 
+
+/**
+ * Initializing the snoowrap Reddit API Call
+ * TODO: Make for web apps
+ */
+
 const r = new snoowrap({
   userAgent: process.env.REACT_APP_USER_AGENT,
   clientId: process.env.REACT_APP_CLIENT_ID,
@@ -26,6 +32,11 @@ class RedditNews extends React.Component {
     };
   }
 
+  /**
+   * Initializes the state for the table by mapping all
+   * reddit events
+   *
+   */
   componentDidMount() {
     this.setState({ loaded: false });
     const rawItems = r.getSubreddit("news").getHot({ limit: 100 });
@@ -41,9 +52,15 @@ class RedditNews extends React.Component {
       .then(scores => {
         this.setState({ upVotes: scores });
       });
-    console.log(process.env)
     // rawItems.map(post => this.analyze(post.title));
   }
+
+  /**
+   *
+   * @param {String} text
+   * String to analyze for the NLU endpoint
+   * @returns JSON object
+   */
 
   analyze(text) {
     analyzeWithAllFeatures({ text }).then(json =>
@@ -53,13 +70,15 @@ class RedditNews extends React.Component {
     );
   }
 
+  /**
+   * Function for generating rows of the table
+   * @params NONE
+   * @return Returns an array contaning each row of the table
+   */
   renderTable() {
     var elements = [];
 
-    var total = 0;
-
     for (var i = 0; i < 100; i++) {
-      total += this.state.scores[i];
       elements.push(
         <tr>
           <td class="column1"> {this.state.posts[i]} </td>
@@ -102,7 +121,6 @@ class RedditNews extends React.Component {
               <td> </td>
             </tr>
           </tfoot>
-          // TODO: GET TOTAL SUM AND LOOK AT DATA
           <tbody>{this.renderTable()}</tbody>
         </table>
       </section>
