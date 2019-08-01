@@ -2,6 +2,10 @@ table {
   border-collapse: collapse;
 }
 
+.first {
+  text-align: center;
+}
+
 
 section, table, td {
   border-radius: 12px;
@@ -9,10 +13,9 @@ section, table, td {
 
 th,
 td {
-  border: 1px solid #cecfd5;
+  border: 1px solid #ffffff;
   padding: 10px 15px;
 }
-
 
 .column1 {
   width: 50%;
@@ -23,6 +26,12 @@ section {
   border-radius: 20px;
 }
 
+.refresh {
+  margin-right: 395px;
+}
+
+
 tfoot tr:last-child td :last-child {
   border-bottom-left-radius: 15px;
 }
+

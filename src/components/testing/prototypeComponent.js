@@ -40,18 +40,16 @@ class RedditTest extends React.Component {
         this.setState({ upVotes: scores });
       });
 
-    rawItems.map(post => this.analyze(post.title));
+    rawItems
+      .map(post => this.analyze(post.title))
+      .then(results => this.setState({ scores: results }));
   }
 
   analyze(text) {
-    analyzeWithAllFeatures({ text }).then(json =>
-      this.setState({
-        scores: this.state.scores.concat(json.results.sentiment.document.score)
-        // loaded: true
-      })
-    );
-
-    // this.setState({loaded: true})
+    analyzeWithAllFeatures({ text }).then(json => {
+      console.log(json.results.sentiment.document.score);
+      return json.results.sentiment.document.score;
+    });
   }
 
   renderTable() {
@@ -96,11 +94,11 @@ class RedditTest extends React.Component {
               <tr>
                 <td colSpan="1"> Total Score </td>
 
-                <td> DICK </td>
+                <td> </td>
 
                 <td> </td>
 
-                <td> ASS </td>
+                <td> </td>
               </tr>
             </tfoot>
 

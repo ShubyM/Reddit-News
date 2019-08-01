@@ -1,27 +1,5 @@
 import fetch from "isomorphic-fetch";
 
-/** 
-The list of features we want to look for in the IBM request, 
-*/
-// const FEATURES = {
-//   features: {
-//     concepts: {},
-//     entities: {},
-//     keywords: {},
-//     categories: {},
-//     emotion: {},
-//     sentiment: {},
-//     semantic_roles: {},
-//     syntax: {
-//       tokens: {
-//         lemma: true,
-//         part_of_speech: true,
-//       },
-//       sentences: true,
-//     },
-//   },
-// };
-
 /**
  * The NLU limit, the number of requests we can make to the IBM server,
  * is calculated based off of how many features are being
@@ -45,7 +23,6 @@ const FEATURES = {
  * converts the response from the IBM server to a json object
  */
 const parseJSON = response => {
-  // eslint-disable-line
   return response.json();
 };
 

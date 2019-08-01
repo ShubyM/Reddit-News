@@ -6,10 +6,8 @@ import { analyzeWithAllFeatures } from "./request";
 const snoowrap = require("snoowrap");
 const dotenv = require("dotenv");
 
-
 /**
  * Initializing the snoowrap Reddit API Call
- * TODO: Make for web apps
  */
 
 const r = new snoowrap({
@@ -21,9 +19,15 @@ const r = new snoowrap({
 });
 
 class RedditNews extends React.Component {
+
+  /**
+   * State is initalized with  posts, scores, upVotes
+   * Posts : The title of each post
+   * Scores: Sentiment extracted for each post
+   * UpVotes: Number of upvotes per post
+   */
   constructor(props) {
     super(props);
-
     this.state = {
       posts: [],
       scores: [],
@@ -38,21 +42,8 @@ class RedditNews extends React.Component {
    *
    */
   componentDidMount() {
-    this.setState({ loaded: false });
     const rawItems = r.getSubreddit("news").getHot({ limit: 100 });
-
-    rawItems
-      .map(post => post.title)
-      .then(titles => {
-        this.setState({ posts: titles });
-      });
-
-    rawItems
-      .map(post => post.score)
-      .then(scores => {
-        this.setState({ upVotes: scores });
-      });
-    // rawItems.map(post => this.analyze(post.title));
+    rawItems.map(post => this.analyze(post.title, post.score));
   }
 
   /**
@@ -61,11 +52,12 @@ class RedditNews extends React.Component {
    * String to analyze for the NLU endpoint
    * @returns JSON object
    */
-
-  analyze(text) {
-    analyzeWithAllFeatures({ text }).then(json =>
+  async analyze(text, upVotes) {
+    await analyzeWithAllFeatures({ text }).then(json =>
       this.setState({
-        scores: this.state.scores.concat(json.results.sentiment.document.score)
+        scores: this.state.scores.concat(json.results.sentiment.document.score),
+        posts: this.state.posts.concat(text),
+        upVotes: this.state.upVotes.concat(upVotes)
       })
     );
   }
@@ -88,8 +80,6 @@ class RedditNews extends React.Component {
         </tr>
       );
     }
-
-    // elements.push(<foot> <tr> </tr></foot> )
     return elements;
   }
 
